@@ -41,10 +41,57 @@ export default function ContainerRegister() {
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
 
+  const [nameEmpty, setNameEmpty] = useState(false);
+  const [emailEmpty, setEmailEmpty] = useState(false);
+  const [phoneEmpty, setPhoneEmpty] = useState(false);
+  const [sexEmpty, setSexEmpty] = useState(false);
+  const [birthEmpty, setBirthEmpty] = useState(false);
+  const [cpfEmpty, setCpfEmpty] = useState(false);
+  const [passwordEmpty, setPasswordEmpty] = useState(false);
+  const [confirmPasswordEmpty, setConfirmPasswordEmpty] = useState(false);
+
   const label = { inputProps: { "aria-label": "Checkbox" } };
+
+  function validateFields() {
+    const fields = [
+      { value: name, setter: setNameEmpty },
+      { value: email, setter: setEmailEmpty },
+      { value: phone, setter: setPhoneEmpty },
+      { value: sex, setter: setSexEmpty },
+      { value: birth, setter: setBirthEmpty },
+      { value: CPF, setter: setCpfEmpty },
+      { value: password, setter: setPasswordEmpty },
+      { value: confirmPassword, setter: setConfirmPasswordEmpty },
+    ];
+
+    let allFieldsValid = true;
+
+    fields.forEach((field) => {
+      if (!field.value) {
+        field.setter(true);
+        allFieldsValid = false;
+      } else {
+        field.setter(false);
+      }
+    });
+
+    return allFieldsValid;
+  }
+
+  function validatePassword() {
+    return password !== confirmPassword;
+  }
 
   const onClickRegister = async () => {
     try {
+      if (!validateFields()) {
+        throw new Error("Os campos obrigatorios não foram preenchidos");
+      }
+
+      if (!validatePassword()) {
+        throw new Error("As senhas näo coincidem");
+      }
+
       const response = await axios.post(
         `http://localhost:3000/user/cadastrar`,
         {
@@ -63,7 +110,6 @@ export default function ContainerRegister() {
         throw new Error("Bad Request, status code:", response["status"]);
       }
     } catch (error) {
-      console.log(error);
       setError(error["message"]);
     }
   };
@@ -110,25 +156,29 @@ export default function ContainerRegister() {
           label={"Nome e sobrenome"}
           placeholder={"Digite seu nome"}
           value={name}
+          error={nameEmpty}
           onChange={(event) => setName(event.target.value)}
         />
         <InputLabel
           value={email}
+          error={emailEmpty}
           onChange={(event) => setEmail(event.target.value)}
           label={"E-mail"}
           placeholder={"Digite seu e-mail"}
         />
         <InputLabel
           value={phone}
+          error={phoneEmpty}
           onChange={(event) => setPhone(event.target.value)}
           label={"Celular"}
           placeholder={"Digite seu celular"}
         />
         <Box>
-          <Typography sx={{ color: colors.textPrimary }}>Sexo</Typography>
           <TextField
             onChange={(event) => setSex(event.target.value)}
             value={sex}
+            error={sexEmpty}
+            label="Sexo"
             fullWidth
             select
             variant="outlined"
@@ -142,14 +192,22 @@ export default function ContainerRegister() {
         </Box>
         <InputLabel
           value={birth}
+          error={birthEmpty}
           onChange={(event) => setBirth(event.target.value)}
           label={"Data de nascimento"}
           placeholder={"Digite sua data de nascimento"}
         />
-        <InputLabel label={"CPF"} placeholder={"Digite seu CPF"} />
+        <InputLabel
+          value={CPF}
+          error={cpfEmpty}
+          onChange={(event) => setCPF(event.target.value)}
+          label={"CPF"}
+          placeholder={"Digite seu CPF"}
+        />
         <Box sx={{ display: "flex" }}>
           <PasswordInput
             value={password}
+            error={passwordEmpty}
             onChange={(event) => setPassword(event.target.value)}
             label={"Senha"}
             showPassword={showPassword}
@@ -158,6 +216,7 @@ export default function ContainerRegister() {
           <div style={{ width: "1.5em" }}></div>
           <PasswordInput
             value={confirmPassword}
+            error={confirmPasswordEmpty}
             onChange={(event) => setConfirmPassword(event.target.value)}
             label={"Confirmar senha"}
             showPassword={showConfirmPassword}
@@ -189,12 +248,20 @@ export default function ContainerRegister() {
   );
 }
 
-function PasswordInput({ label, showPassword, handleClickShowPassword }) {
+function PasswordInput({
+  label,
+  showPassword,
+  handleClickShowPassword,
+  value,
+  error,
+}) {
   return (
     <Box>
       <Typography sx={{ color: colors.textPrimary }}>{label}</Typography>
       <OutlinedInput
         fullWidth
+        value={value}
+        error={error}
         type={showPassword ? "text" : "password"}
         endAdornment={
           <InputAdornment position="end">

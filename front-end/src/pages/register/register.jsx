@@ -1,14 +1,14 @@
 import * as React from "react";
-import Header from "./AppBar/index";
+import RegisterAppBar from "./AppBar/index";
 import { Box, Typography } from "@mui/material";
 import ContainerRegister from "./ContainerRegister";
 import colors from "../../theme/colors";
 
-function Register() {
+export default function Register() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <Header />
+        <RegisterAppBar />
         <Box
           sx={{
             backgroundColor: colors.BackGround,
@@ -63,5 +63,3 @@ function Register() {
     </>
   );
 }
-
-export default Register;

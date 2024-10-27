@@ -2,7 +2,7 @@ import * as React from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import colors from "../../../theme/colors";
 
-export default function DefaultAppBar() {
+export default function HomeAppBar() {
   return (
     <AppBar
       color="fff"
