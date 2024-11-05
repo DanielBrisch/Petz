@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import { User } from './entites/user.entity';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
+import { AuthModule } from './modules/auth.module';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ dotenv.config();
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -20,13 +22,11 @@ dotenv.config();
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [
-        User
-      ],
+      entities: [User],
     }),
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UserController],
   providers: [UserService],
 })
-export class AppModule { }
+export class AppModule {}

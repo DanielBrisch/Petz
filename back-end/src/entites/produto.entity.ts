@@ -1,35 +1,34 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
-@Entity('produto')
-export class Produto {
+@Entity('product')
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  nome: string;
+  @Column({ name: 'nome', type: 'varchar', length: 255 })
+  name: string;
 
-  @Column({ type: 'text' })
+  @Column({ name: 'descricao', type: 'text' })
   descricao: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  preco: number;
+  @Column({ name: 'preco', type: 'decimal', precision: 10, scale: 2 })
+  price: number;
 
-  @Column({ type: 'int' })
-  estoque: number;
+  @Column({ name: 'estoque', type: 'int' })
+  stock: number;
 
   @Column({ name: 'categoria_id', nullable: false })
-  categoriaId: number;
+  categoryId: number;
 
-  @Column({name: 'especificacoes_id', nullable: false})
-  especificacoesId: number
+  @Column({ name: 'especificacoes_id', nullable: false })
+  specificationsId: number;
 
   @Column({ type: 'date', nullable: true })
-  dataValidade: Date;
+  dateValidity: Date;
 
-  @Column()
-  imagem: string;
+  @Column({ name: 'imagem' })
+  image: string;
 
-  @Column({ type: 'char', length: 1, nullable: false})
-  avaliacao: number
-
+  @Column({ name: 'avaliacao', type: 'char', length: 1, nullable: false })
+  assessment: number;
 }

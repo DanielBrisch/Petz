@@ -1,5 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { UserDto } from 'src/DTOs/user.dto';
+import {
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Put,
+} from '@nestjs/common';
 import { User } from 'src/entites/user.entity';
 import { UserService } from 'src/services/user.service';
 
@@ -7,18 +13,47 @@ import { UserService } from 'src/services/user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get()
-  findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  @Get('count-users')
+  async countUsers(): Promise<number> {
+    return await this.userService.countUsers();
+  }
+
+  @Get('find-all')
+  async findAll(): Promise<User[]> {
+    const usersList = await this.userService.findAll();
+    if (!usersList) {
+      throw new NotFoundException(`No users found`);
+    }
+    return await this.userService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Promise<User> {
-    return this.userService.findById(id);
+  async findById(@Param('id') id: string): Promise<User> {
+    const user = await this.userService.findById(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
   }
 
-  @Post('cadastrar')
-  async createUser(@Body() createUserDto: UserDto) {
-    return await this.userService.create(createUserDto);
+  @Put('inactivate')
+  async inactivateById(@Param('id') id: string) {
+    const user = await this.userService.findById(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    await this.userService.inactivateById(id);
+  }
+
+  @Delete('id')
+  async deleteUser(@Param('id') userId: string) {
+    const user = await this.userService.findById(userId);
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+
+    await this.userService.delete(userId);
   }
 }
