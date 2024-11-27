@@ -1,5 +1,5 @@
 export enum FaixaEtariaEnum {
-    Filhote = 'Filhote',
-    Adulto = 'Adulto',
-    Idoso = 'Idoso',
-  }
+  Filhote = 'Filhote',
+  Adulto = 'Adulto',
+  Idoso = 'Idoso',
+}

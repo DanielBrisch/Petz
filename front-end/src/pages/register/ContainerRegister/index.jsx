@@ -17,6 +17,7 @@ import { useState } from "react";
 import InputLabel from "../inputLabel";
 import colors from "../../../theme/colors";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ContainerRegister() {
   const genres = [
@@ -49,6 +50,7 @@ export default function ContainerRegister() {
   const [cpfEmpty, setCpfEmpty] = useState(false);
   const [passwordEmpty, setPasswordEmpty] = useState(false);
   const [confirmPasswordEmpty, setConfirmPasswordEmpty] = useState(false);
+  const navigate = useNavigate();
 
   const label = { inputProps: { "aria-label": "Checkbox" } };
 
@@ -105,13 +107,17 @@ export default function ContainerRegister() {
         }
       );
       if (response["status"] == 200) {
-        console.log("teste");
+        handleNavigateToLogin();
       } else {
         throw new Error("Bad Request, status code:", response["status"]);
       }
     } catch (error) {
       setError(error["message"]);
     }
+  };
+
+  const handleNavigateToLogin = () => {
+    navigate("/register");
   };
 
   return (

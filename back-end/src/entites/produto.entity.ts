@@ -23,10 +23,10 @@ export class Product {
   @Column({ name: 'especificacoes_id', nullable: false })
   specificationsId: number;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ name: 'data_validade', type: 'date', nullable: true })
   dateValidity: Date;
 
-  @Column({ name: 'imagem' })
+  @Column({ name: 'imagem_url' })
   image: string;
 
   @Column({ name: 'avaliacao', type: 'char', length: 1, nullable: false })

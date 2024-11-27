@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthGuard } from '../auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtStrategy } from 'src/jsw.strategy';
+import { DogFoodModule } from './Dog/dog-food.module';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ dotenv.config();
       signOptions: { expiresIn: '1h' },
     }),
     UserModule,
+    DogFoodModule,
   ],
   providers: [
     AuthService,

@@ -8,10 +8,10 @@ export class DogFoodController {
 
   @Get('find-all')
   async findAll(): Promise<Product[]> {
-    const usersList = await this.dogFoodService.findAll();
-    if (!usersList) {
-      throw new NotFoundException(`No users found`);
+    const productsList = await this.dogFoodService.findAll();
+    if (!productsList || productsList.length === 0) {
+      throw new NotFoundException(`No products found`);
     }
-    return await this.dogFoodService.findAll();
+    return productsList;
   }
 }

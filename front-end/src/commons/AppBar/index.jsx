@@ -1,8 +1,8 @@
 import * as React from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import colors from "../../../theme/colors";
+import colors from "../../theme/colors";
 
-export default function RegisterAppBar() {
+export default function AppBarPetz() {
   return (
     <AppBar
       color="fff"

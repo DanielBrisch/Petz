@@ -22,7 +22,7 @@ export class UserDto extends PartialType(User) {
 
   @IsString()
   @IsNotEmpty()
-  readonly data_nascimento: Date;
+  readonly birth: Date;
 
   @IsString()
   @IsNotEmpty()

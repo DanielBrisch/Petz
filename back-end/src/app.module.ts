@@ -6,6 +6,7 @@ import { User } from './entites/user.entity';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { AuthModule } from './modules/auth.module';
+import { Product } from './entites/produto.entity';
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ dotenv.config();
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Product],
     }),
     TypeOrmModule.forFeature([User]),
   ],
