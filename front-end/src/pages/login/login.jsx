@@ -28,7 +28,7 @@ export default function LoginPage() {
         if (email == "admin@gmail.com" && password == "admin") {
           navigate("/admin");
         } else {
-          navigate("/");
+          navigate("/home");
         }
       } else {
         alert("Falha no login. Verifique suas credenciais.");

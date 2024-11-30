@@ -4,15 +4,17 @@ import HomePage from "../pages/home/home";
 import RegisterPage from "../pages/register/register";
 import LoginPage from "../pages/login/login";
 import AdminPage from "../pages/admin/admin";
+import EditItem from "../pages/edit-item/edit-item";
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/edit/:id" element={<EditItem />} />
       </Routes>
     </Router>
   );
