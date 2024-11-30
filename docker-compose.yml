@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: /mnt/c/Users/Daniel/projects/petz/Petz/back-end
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./back:/app/back
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: /mnt/c/Users/Daniel/projects/petz/Petz/front-end
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front:/app/front
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:15 
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: Petz-DB
+    ports:
+      - "5432:5432"  
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  
+
+volumes:
+  postgres-data:  
